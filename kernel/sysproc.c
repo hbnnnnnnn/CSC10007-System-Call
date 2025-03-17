@@ -6,6 +6,14 @@
 #include "spinlock.h"
 #include "proc.h"
 
+uint64 
+sys_sysinfo(void) 
+{
+  uint64 info;
+  argaddr(0, &info);
+  return systeminfo(info);
+}
+
 uint64
 sys_exit(void)
 {

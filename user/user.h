@@ -1,6 +1,8 @@
 struct stat;
+struct sysinfo;
 
 // system calls
+int sysinfo(struct sysinfo*);
 int fork(void);
 int exit(int) __attribute__((noreturn));
 int wait(int*);
