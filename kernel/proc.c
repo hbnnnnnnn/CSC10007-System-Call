@@ -16,6 +16,7 @@ int nextpid = 1;
 struct spinlock pid_lock;
 
 extern void forkret(void);
+extern uint64 getnproc(void);
 static void freeproc(struct proc *p);
 
 extern char trampoline[]; // trampoline.S
@@ -26,20 +27,22 @@ extern char trampoline[]; // trampoline.S
 // must be acquired before any p->lock.
 struct spinlock wait_lock;
 
-uint64 
-getnproc(void)
+uint64 getnproc(void)
 {
-  uint64 nproc = 0;
-  struct proc* p;
+  struct proc *p;
+  uint64 count = 0;
 
-  for (p = proc; p < &proc[NPROC]; p++) {
+  for (p = proc; p < &proc[NPROC]; p++) 
+  {
     acquire(&p->lock);
     if (p->state != UNUSED) 
-    nproc++;
+    {
+      count++;
+    }
     release(&p->lock);
   }
 
-  return nproc;
+  return count;
 }
 
 // Allocate a page for each process's kernel stack.

@@ -6,6 +6,12 @@
 #include "spinlock.h"
 #include "proc.h"
 
+uint64
+sys_getnproc(void)
+{
+  return getnproc();
+}
+
 uint64 
 sys_sysinfo(void) 
 {
